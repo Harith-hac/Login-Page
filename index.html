@@ -43,50 +43,11 @@
 <body>
     <div class="login-box">
         <h2>تسجيل الدخول</h2>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-            <input type="password" id="password" placeholder="كلمة المرور" required>
+        <form action="login.php" method="POST">
+            <input type="text" name="email" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+            <input type="password" name="password" placeholder="كلمة المرور" required>
             <button type="submit">تسجيل الدخول</button>
         </form>
     </div>
-
-    <!-- 🔹 إضافة Firebase هنا -->
-    <script type="module">
-        // استيراد Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // 🔹 قم بتحديث هذه الإعدادات بمعلومات مشروع Firebase الخاص بك
-        const firebaseConfig = {
-            apiKey: "مفتاح API الخاص بك",
-            authDomain: "نطاق المصادقة الخاص بك",
-            projectId: "معرّف المشروع الخاص بك",
-            storageBucket: "اسم التخزين الخاص بك",
-            messagingSenderId: "معرّف المراسلة الخاص بك",
-            appId: "معرّف التطبيق الخاص بك"
-        };
-
-        // تهيئة Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // التقاط البيانات عند تسجيل الدخول
-        document.getElementById("loginForm").addEventListener("submit", async function(event) {
-            event.preventDefault(); // منع إعادة تحميل الصفحة
-
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            try {
-                await addDoc(collection(db, "users"), {
-                    email: email,
-                    password: password
-                });
-                alert("تم تسجيل البيانات بنجاح في Firebase!");
-            } catch (error) {
-                console.error("حدث خطأ أثناء الحفظ: ", error);
-            }
-        });
-    </script>
 </body>
 </html>
